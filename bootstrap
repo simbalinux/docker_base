@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -x
+#install packages & tools
+yum -y check-update
+yum -y install wget vim curl jq
+#install docker community edition start and enable 
+curl -fsSL https://get.docker.com/ | sh
+systemctl start docker
+systemctl status docker
+systemctl enable docker
+
+#add vagrant user to the docker group and remember to logout to take effect!
+usermod -aG docker vagrant
+docker version
+
+#install docker compose
+yum -y install epel-release
+yum -y install python-pip
+pip install --upgrade pip 
+pip install docker-compose
+yum -y upgrade python*
+
+#check the version
+docker-compose --version
